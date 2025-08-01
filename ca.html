@@ -1,0 +1,607 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para Ti, Mi Reina - 1 de Agosto BCode</title>
+    <!-- Enlaces a fuentes externas (se mantienen) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;700&family=Montserrat:wght@300;400&family=Parisienne&display=swap" rel="stylesheet">
+
+    <!-- === CÓDIGO CSS INSERTADO AQUÍ === -->
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Cormorant Garamond', serif;
+            background: #0a0a0a;
+            color: #f0e6f0;
+            min-height: 100vh;
+            overflow-x: hidden;
+            line-height: 1.8;
+            letter-spacing: 0.5px;
+        }
+
+        .silk-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                radial-gradient(circle at 20% 30%, rgba(80, 20, 100, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 80% 70%, rgba(150, 50, 100, 0.15) 0%, transparent 40%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .scroll-container {
+            max-width: 100%;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .hero-section {
+            height: 100vh;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-title {
+            font-family: 'Parisienne', cursive;
+            font-size: clamp(3rem, 8vw, 5rem);
+            color: #f8d7f0;
+            margin-bottom: 20px;
+            text-shadow: 0 0 20px rgba(255, 182, 220, 0.3);
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1.5s ease-out 0.3s forwards;
+        }
+
+        .hero-subtitle {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(1.2rem, 3vw, 1.8rem);
+            color: #d8b8d8;
+            margin-bottom: 40px;
+            font-weight: 300;
+            letter-spacing: 2px;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1.5s ease-out 0.6s forwards;
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            opacity: 0;
+            animation: fadeIn 1s ease-out 2s forwards;
+        }
+
+        .scroll-text {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.8rem;
+            color: #c8a2c8;
+            margin-bottom: 10px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        .scroll-arrow {
+            width: 20px;
+            height: 30px;
+            border: 1px solid #c8a2c8;
+            border-radius: 10px;
+            position: relative;
+        }
+
+        .scroll-arrow::after {
+            content: '';
+            position: absolute;
+            top: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 4px;
+            background: #c8a2c8;
+            border-radius: 50%;
+            animation: scrollBounce 1.5s infinite;
+        }
+
+        @keyframes scrollBounce {
+            0% {
+                transform: translateY(0) translateX(-50%);
+                opacity: 0;
+            }
+
+            50% {
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(10px) translateX(-50%);
+                opacity: 0;
+            }
+        }
+
+        .photo-section {
+            min-height: 100vh;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 80px 20px;
+            position: relative;
+        }
+
+        .photo-container {
+            width: 280px;
+            height: 280px;
+            border-radius: 50%;
+            border: 1px solid rgba(240, 200, 240, 0.3);
+            padding: 5px;
+            margin-bottom: 50px;
+            position: relative;
+            box-shadow: 0 0 40px rgba(200, 120, 200, 0.2);
+            opacity: 0;
+            transform: scale(0.9);
+            transition: all 1s ease;
+        }
+
+        .photo-container.visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .photo-container::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            border-radius: 50%;
+            border: 1px solid rgba(240, 200, 240, 0.1);
+            animation: pulse 4s infinite alternate;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 0.3;
+            }
+
+            100% {
+                transform: scale(1.05);
+                opacity: 0.1;
+            }
+        }
+
+        .photo-frame {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .photo-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: sepia(10%) contrast(110%) brightness(110%);
+            transition: filter 0.5s ease;
+        }
+
+        .photo-container:hover img {
+            filter: sepia(0%) contrast(120%) brightness(120%);
+        }
+
+        .photo-caption {
+            max-width: 600px;
+            text-align: center;
+            font-size: clamp(1.1rem, 3vw, 1.3rem);
+            color: #e8c8e8;
+            margin-top: 30px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 1s ease 0.3s;
+        }
+
+        .photo-caption.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .message-section {
+            min-height: 100vh;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 80px 20px;
+            position: relative;
+        }
+
+        .message-container {
+            max-width: 700px;
+            padding: 40px;
+            position: relative;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 1s ease;
+        }
+
+        .message-container.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .message-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 1px solid rgba(240, 200, 240, 0.2);
+            border-radius: 5px;
+            pointer-events: none;
+        }
+
+        .message-text {
+            font-size: clamp(1.1rem, 3vw, 1.3rem);
+            line-height: 2;
+            color: #f0e0f0;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .hidden-message {
+            display: none;
+            font-family: 'Parisienne', cursive;
+            font-size: clamp(2rem, 5vw, 3rem);
+            color: #f8d0f0;
+            text-align: center;
+            margin: 40px 0;
+            text-shadow: 0 0 15px rgba(255, 182, 220, 0.4);
+        }
+
+        .reveal-btn {
+            background: transparent;
+            border: 1px solid rgba(240, 200, 240, 0.5);
+            color: #f0d0f0;
+            padding: 15px 40px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.5s ease;
+            position: relative;
+            overflow: hidden;
+            margin-top: 20px;
+        }
+
+        .reveal-btn:hover {
+            background: rgba(240, 200, 240, 0.1);
+            letter-spacing: 3px;
+        }
+
+        .reveal-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(240, 200, 240, 0.1), transparent);
+            transition: all 0.5s ease;
+        }
+
+        .reveal-btn:hover::before {
+            left: 100%;
+        }
+
+        .signature-section {
+            min-height: 50vh;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 80px 20px;
+            position: relative;
+        }
+
+        .signature {
+            font-family: 'Parisienne', cursive;
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            color: #f8d0f0;
+            margin: 40px 0;
+            text-shadow: 0 0 20px rgba(255, 182, 220, 0.3);
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 1s ease;
+        }
+
+        .signature.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .signature::after {
+            content: '';
+            display: block;
+            width: 100px;
+            height: 1px;
+            background: linear-gradient(to right, transparent, #c8a2c8, transparent);
+            margin: 20px auto;
+        }
+
+        .glow-effect {
+            position: fixed;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(200, 120, 200, 0.1) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: -1;
+            animation: floatGlow 15s infinite alternate;
+        }
+
+        @keyframes floatGlow {
+            0% {
+                transform: translate(10vw, 10vh);
+            }
+
+            25% {
+                transform: translate(80vw, 30vh);
+            }
+
+            50% {
+                transform: translate(40vw, 70vh);
+            }
+
+            75% {
+                transform: translate(70vw, 20vh);
+            }
+
+            100% {
+                transform: translate(20vw, 80vh);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        .flower {
+            position: fixed; /* Usar fixed para que floten por toda la pantalla */
+            font-size: 1.2rem;
+            opacity: 0.3;
+            animation: floatFlower linear infinite;
+            z-index: 1; /* Ponerlo por encima del fondo pero debajo del contenido principal */
+            pointer-events: none;
+        }
+
+        @keyframes floatFlower {
+            to {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .photo-container {
+                width: 220px;
+                height: 220px;
+            }
+
+            .message-container {
+                padding: 20px;
+            }
+
+            .reveal-btn {
+                padding: 12px 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="silk-background"></div>
+    <div class="glow-effect" style="top:20%; left:10%;"></div>
+    <div class="glow-effect" style="top:70%; left:80%; animation-delay: 5s;"></div>
+    <div class="glow-effect" style="top:40%; left:50%; animation-delay: 10s;"></div>
+    
+    <div id="flowersContainer"></div>
+
+    <div class="scroll-container">
+        <section class="hero-section">
+            <div class="hero-content">
+                <h1 class="hero-title">A ti, que aún vives en mis pensamientos</h1>
+                <p class="hero-subtitle">No sé si este mensaje llega tarde, o si aún significa algo… pero si tu alma se quedó un instante más, te invito a leer no con la mente, sino con el corazón. Porque a veces, el amor no se apaga… solo se queda callado esperando que alguien lo escuche de nuevo.</p>
+            </div>
+            <div class="scroll-indicator">
+                <span class="scroll-text">Desliza y siente 🥀</span>
+                <div class="scroll-arrow"></div>
+            </div>
+        </section>
+    
+        <section class="photo-section">
+            <div class="photo-container">
+                <div class="photo-frame">
+                    <img src="https://bcodestorague.anteroteobaldob.workers.dev/share/anteroteobaldob_gmail_com/IMG/ramo.png" alt="Ramo">
+                </div>
+            </div>
+            <p class="photo-caption">No sé si el viento te trajo este susurro, pero si lo hace, que sepas que aún conservo cada risa tuya como quien guarda una flor seca entre las páginas de un libro que no se ha vuelto a abrir.️</p>
+        </section>
+        
+        <section class="message-section">
+            <div class="message-container">
+                <p class="message-text">
+                    Tal vez erré, tal vez me perdí, pero nunca dejé de sentir. Desde tu ausencia, aprendí que el amor verdadero no se borra… simplemente se transforma en una esperanza que se arropa con los días.
+                </p>
+                
+                <p class="message-text">
+                    En esta fecha que antes celebrábamos, solo quiero recordarte que fuiste, eres y serás una parte sagrada de mi historia. Si el universo algún día nos cruza de nuevo, que sea con paz en el alma y ternura en la mirada.
+                </p>
+                
+                <button class="reveal-btn" id="revealBtn">Toca si aún queda curiosidad... 🌙</button>
+                
+                <p class="hidden-message" id="hiddenMessage">
+                    Aún con el alma en pausa, si alguna vez decides regresar, no haré preguntas... Solo abriré los brazos y dejaré que hable el tiempo.                </p>
+            </div>
+        </section>
+
+        <section class="signature-section">
+            <p class="signature">"Hay amores que nunca se van, solo aprenden a esperar."</p>
+        </section>
+    </div>
+    
+    <!-- === CÓDIGO JAVASCRIPT INSERTADO AQUÍ === -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Configuración para que los elementos aparezcan al hacer scroll
+            const observerOptions = {
+                threshold: 0.1
+            };
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, observerOptions);
+            
+            const sections = document.querySelectorAll('.photo-container, .photo-caption, .message-container, .signature');
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+
+            // Lógica del botón para revelar el mensaje secreto
+            const revealBtn = document.getElementById('revealBtn');
+            const hiddenMessage = document.getElementById('hiddenMessage');
+            
+            revealBtn.addEventListener('click', function() {
+                // Muestra el mensaje oculto con una animación
+                hiddenMessage.style.display = 'block';
+                hiddenMessage.style.animation = 'fadeIn 1.5s ease-out forwards';
+                
+                // Cambia el texto del botón
+                revealBtn.textContent = 'Gracias por existir';
+
+                // Crea el efecto de explosión de flores
+                createFlowerExplosion();
+                
+                // Hace scroll suavemente hacia el mensaje revelado
+                setTimeout(() => {
+                    hiddenMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
+            });
+            
+            // Función que crea una "explosión" de flores al hacer clic
+            function createFlowerExplosion() {
+                const flowers = ['🌸', '🌹', '💐', '🌺', '🌷', '🥀', '🌻'];
+                const container = document.getElementById('flowersContainer');
+                
+                for (let i = 0; i < 30; i++) {
+                    setTimeout(() => {
+                        createFloatingFlower(container, flowers, true);
+                    }, i * 50); // Lanza flores rápidamente
+                }
+            }
+            
+            // Función que crea flores flotantes de fondo
+            function createInitialFlowers() {
+                const flowers = ['🌸', '🌹', '💐'];
+                const container = document.getElementById('flowersContainer');
+                for (let i = 0; i < 15; i++) {
+                     createFloatingFlower(container, flowers, false);
+                }
+            }
+
+            // Función reutilizable para crear una flor
+            function createFloatingFlower(container, flowerArray, isExplosion) {
+                const flower = document.createElement('div');
+                flower.className = 'flower';
+                flower.textContent = flowerArray[Math.floor(Math.random() * flowerArray.length)];
+                flower.style.left = `${Math.random() * 100}vw`;
+                
+                if (isExplosion) {
+                    flower.style.bottom = '-50px'; // Empiezan desde abajo para la explosión
+                } else {
+                    flower.style.top = `${Math.random() * 100}vh`; // Posición inicial aleatoria para las de fondo
+                }
+                
+                const size = 0.8 + Math.random() * 1.5;
+                flower.style.fontSize = `${size}rem`;
+                const duration = 8 + Math.random() * 12;
+                flower.style.animationDuration = `${duration}s`;
+                flower.style.animationDelay = `${Math.random() * 5}s`;
+                
+                container.appendChild(flower);
+
+                // Elimina la flor del DOM después de que termine la animación para no sobrecargar la página
+                setTimeout(() => {
+                    flower.remove();
+                }, (duration + 5) * 1000);
+            }
+
+            // Iniciar las flores de fondo
+            createInitialFlowers();
+        });
+    </script>
+</body>
+</html>
